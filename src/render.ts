@@ -39,4 +39,10 @@ export interface Renderer {
      * @param contents The tile's contents
      */
     tile(location: Coordinate, contents: Pattern): void;
+
+    /**
+     * Write some text to the middle of the screen.
+     * @param content the text to write
+     */
+    text(content: string, font: string, colour?: string): void;
 }

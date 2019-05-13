@@ -5,7 +5,7 @@ import { Renderer } from "../render";
  */
 export interface View {
     animate(renderer: Renderer, dt: number): Transition;
-    onKeyDown?(e: KeyboardEvent): void;
+    onKeyDown?(e: KeyboardEvent): Transition;
 }
 
 export type Transition = View | undefined;

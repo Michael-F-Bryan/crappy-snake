@@ -1,11 +1,10 @@
 import { Options } from "./World";
 import CanvasRenderer from "./CanvasRenderer";
-import { Renderer, render } from "./render";
+import { Renderer } from "./render";
+import { View, Transition } from "./views/View";
+import Game from "./views/Game";
 
 import "./master.css";
-import updateWorld from "./physics";
-import { View } from "./views/View";
-import Game from "./views/Game";
 
 const options: Options = {
     columns: 30,
@@ -20,11 +19,12 @@ const options: Options = {
     tickSpeedup: 0.95,
 };
 
-let view: View = Game.Randomized(options);
+let view: View;
 let canvas: HTMLCanvasElement | undefined;
 let renderer: Renderer | undefined;
 
 function initialize() {
+    updateView(Game.Randomized(options));
     const el = document.querySelector("canvas");
 
     if (!el) {
@@ -52,7 +52,11 @@ function animate() {
     const dt = (now.valueOf() - lastTick.valueOf()) / 1000;
 
     if (renderer) {
-        view.animate(renderer, dt);
+        const transition = view.animate(renderer, dt);
+
+        if (transition) {
+            updateView(transition);
+        }
     }
 
     lastTick = now;
@@ -60,13 +64,19 @@ function animate() {
 }
 
 function onKeyDown(e: KeyboardEvent) {
-    e.preventDefault();
-
     if (view.onKeyDown) {
         view.onKeyDown(e);
     }
 }
 
-initialize();
+function updateView(trans: Transition): void {
+    if (trans) {
+        view = trans;
+        (window as any).gameView = view;
+    }
+}
+
 window.addEventListener("resize", onResize);
 window.addEventListener("keydown", onKeyDown);
+
+initialize();

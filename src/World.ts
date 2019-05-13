@@ -51,10 +51,10 @@ export default class World {
         return tile;
     }
 
-    public onKeyDown(key: string): void {
+    public onKeyDown(e: KeyboardEvent): void {
         let direction: Coordinate;
 
-        switch (key) {
+        switch (e.key) {
             case "ArrowRight":
                 direction = directions.east;
                 break;
@@ -71,12 +71,14 @@ export default class World {
                 return;
         }
 
+        e.preventDefault();
         const { body, head } = this.snake;
 
         const nextTileWouldBe = head.add(direction);
         if (body.length == 0 || !nextTileWouldBe.equals(body[0])) {
             this.snake.velocity = direction;
         }
+
     }
 }
 

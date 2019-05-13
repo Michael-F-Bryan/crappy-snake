@@ -37,6 +37,13 @@ function checkCollisions(world: World): Outcome {
         }
     }
 
+    for (let i = 1; i < snake.body.length; i++) {
+        let segment = snake.body[i];
+        if (snake.head.equals(segment)) {
+            return Outcome.Died;
+        }
+    }
+
     return Outcome.Continue;
 }
 

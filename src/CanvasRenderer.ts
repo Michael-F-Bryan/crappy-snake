@@ -32,4 +32,19 @@ export default class CanvasRenderer implements Renderer {
         this.ctx.fillStyle = contents;
         this.ctx.fillRect(location.x * tileWidth, location.y * tileHeight, tileWidth, tileHeight);
     }
+
+    text(content: string, font: string, colour?: string): void {
+        this.ctx.font = font;
+        this.ctx.textBaseline = "middle";
+        this.ctx.textAlign = "center"
+
+        if (colour) {
+            this.ctx.fillStyle = colour;
+        }
+
+        const { width, height } = this.ctx.canvas;
+
+
+        this.ctx.fillText(content, width / 2, height / 2);
+    }
 }

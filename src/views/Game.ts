@@ -5,6 +5,7 @@ import Snake, { directions } from "../Snake";
 import Coordinate from "../Coordinate";
 import { Item } from "../Item";
 import updateWorld, { Outcome } from "../physics";
+import LoseScreen from "./LoseScreen";
 
 export default class Game implements View {
     public static Randomized(options: Options): Game {
@@ -29,7 +30,7 @@ export default class Game implements View {
 
         switch (outcome) {
             case Outcome.Died:
-                throw new Error("Unimplemented");
+                return new LoseScreen(this.world.options);
             case Outcome.Won:
                 throw new Error("Unimplemented");
             default:
@@ -41,8 +42,9 @@ export default class Game implements View {
         return;
     }
 
-    onKeyDown(e: KeyboardEvent): void {
-        this.world.onKeyDown(e.key);
+    onKeyDown(e: KeyboardEvent): Transition {
+        this.world.onKeyDown(e);
+        return;
     }
 }
 
