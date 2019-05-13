@@ -1,7 +1,10 @@
-language: node
+language: node_js
+cache: yarn
+
+before_script:
+  - yarn install
 
 script:
-  - yarn install
   - yarn run build
   
 deploy:
