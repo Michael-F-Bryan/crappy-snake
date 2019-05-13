@@ -31,7 +31,7 @@ export interface Renderer {
     /**
      * Clear the canvas.
      */
-    clear(): void;
+    clear(opacity?: number): void;
 
     /**
      * Render a single tile to the canvas.

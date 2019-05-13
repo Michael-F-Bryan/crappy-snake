@@ -11,10 +11,17 @@ export default class CanvasRenderer implements Renderer {
         this.options = options;
     }
 
-    clear(): void {
+    clear(opacity?: number): void {
         const { width, height } = this.ctx.canvas;
         this.ctx.fillStyle = this.options.palette.background_colour;
+
+        if (opacity) {
+            this.ctx.globalAlpha = opacity;
+        }
+
         this.ctx.fillRect(0, 0, width, height);
+
+        this.ctx.globalAlpha = 1.0;
     }
 
     tile(location: Coordinate, contents: string): void {

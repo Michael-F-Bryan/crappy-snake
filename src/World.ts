@@ -1,4 +1,4 @@
-import Snake from "./Snake";
+import Snake, { directions } from "./Snake";
 import { Item } from "./Item";
 import Coordinate from "./Coordinate";
 
@@ -49,6 +49,34 @@ export default class World {
         } while (this.at(tile) !== undefined)
 
         return tile;
+    }
+
+    public onKeyDown(key: string): void {
+        let direction: Coordinate;
+
+        switch (key) {
+            case "ArrowRight":
+                direction = directions.east;
+                break;
+            case "ArrowUp":
+                direction = directions.north;
+                break;
+            case "ArrowLeft":
+                direction = directions.west;
+                break;
+            case "ArrowDown":
+                direction = directions.south;
+                break;
+            default:
+                return;
+        }
+
+        const { body, head } = this.snake;
+
+        const nextTileWouldBe = head.add(direction);
+        if (body.length == 0 || !nextTileWouldBe.equals(body[0])) {
+            this.snake.velocity = direction;
+        }
     }
 }
 
